@@ -2,7 +2,7 @@ import React from 'react'
 import BasicKnob from "./basicknob";
 import { Row, Col } from "react-bootstrap"
 
-class MKnob extends React.Component {
+class Knob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ class MKnob extends React.Component {
       <Col className='colknob'>
       <Row noGutters='true' className="justify-content-center"><Col md="auto">{this.props.def.label}</Col> </Row>
       <Row noGutters='true' className="justify-content-center"><Col md="auto">
-      <Knob min={this.props.def.min} max={this.props.def.max} step={this.props.def.step} inputColor="#FFFFFF" fgColor="#0077FF" width={50} height={50} angleOffset={210} angleArc={300} value={this.state.value} onChange={this.handleChange} /></Col>
+      <BasicKnob min={this.props.def.min} max={this.props.def.max} step={this.props.def.step} inputColor="#FFFFFF" fgColor="#0077FF" width={50} height={50} angleOffset={210} angleArc={300} value={this.state.value} onChange={this.handleChange} /></Col>
       </Row>
       </Col>
     )
@@ -44,4 +44,4 @@ class MKnob extends React.Component {
   }
 }
 
-export default MKnob;
+export default Knob;
