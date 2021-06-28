@@ -21,7 +21,6 @@ class CsoundInstr extends React.Component {
       let self = this;
       const url = this.props.csoundwasm;
       const { Csound } = await import(/* webpackIgnore: true */ url);
-      //const wasmurl = withPrefix('/plugin_example.wasm');  
       this.csound = await Csound({
         withPlugins: [this.props.plugins]
       });

@@ -4,8 +4,7 @@ import Fader from './fader'
 import Knob from './knob'
 import Switch from './switch'
 import NumberInput from './numberinput'
-//import NToggle from './NToggle'
-//import BitInput from './BitInput'
+import Toggle from './toggle'
 import XY from './xy'
 
 class Panel extends React.Component {
@@ -66,24 +65,19 @@ class Panel extends React.Component {
               <Fader def={component} key={component.id} onChange={this.onChange.bind(this)}/>
             )
           break;
-          //case 'bitinput':
-          //  components.push(
-          //    <BitInput def={component} key={component.id}/>
-          //  )
-          //break;
           case 'knob':
             components.push(
-              <MKnob vertical={this.props.def.vertical} def={component} key={component.id} onChange={this.onChange.bind(this)}/>
+              <Knob vertical={this.props.def.vertical} def={component} key={component.id} onChange={this.onChange.bind(this)}/>
             )
           break;
-          //case 'ntoggle':
-          //  components.push(
-          //    <NToggle def={component} key={component.id}/>
-          //  )
-          //break;
+          case 'toggle':
+            components.push(
+              <Toggle def={component} key={component.id}/>
+            )
+          break;
           case 'select':
             components.push(
-              <MSelect def={component} key={component.id} onChange={this.onChange.bind(this)}/>
+              <Switch def={component} key={component.id} onChange={this.onChange.bind(this)}/>
             )
           break;
           case 'spinner':
