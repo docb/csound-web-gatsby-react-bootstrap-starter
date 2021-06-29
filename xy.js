@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Row, Col  } from "react-bootstrap"
 
-import { Stage, Layer, Circle, Rect, Text } from 'react-konva';
-import Konva from 'konva';
+import { Stage, Layer, Circle } from 'react-konva';
+//import Konva from 'konva';
 
 class XY extends React.Component {
   constructor(props) {

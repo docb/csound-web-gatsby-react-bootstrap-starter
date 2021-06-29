@@ -18,7 +18,6 @@ class CsoundInstr extends React.Component {
   }
 
   async componentDidMount() {
-      let self = this;
       const url = this.props.csoundwasm;
       const { Csound } = await import(/* webpackIgnore: true */ url);
       this.csound = await Csound({
