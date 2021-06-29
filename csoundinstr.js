@@ -12,7 +12,6 @@ class CsoundInstr extends React.Component {
       let t = { value: { name:'12edo' } , label: '12edo' }; 
       this.state={csoundLoaded:"loading",csndstatus:'dbyellow',started: true, midi: false, velocity:100, octave: 5,currentTuning:t};
       this.inst = props.inst;
-      this.csd = props.csd;
       this.options = props.tunings.map(tuning => { return { value: tuning, label: tuning.name}});
       this.options.unshift(t);
   }
@@ -25,8 +24,9 @@ class CsoundInstr extends React.Component {
       });
       const csdresp = await fetch(this.props.csd);
       let buf = await csdresp.text();
-      this.csound.fs.writeFileSync(this.props.csd, buf);
-      let result = await this.csound.compileCsd(this.csd);
+      let csd = this.props.csd.substring(this.props.csd.lastIndexOf('/')+1);
+      this.csound.fs.writeFileSync(csd, buf);
+      let result = await this.csound.compileCsd(csd);
       console.log(result);
       this.csound.start();
       this.setState({csoundLoaded:"running"});
