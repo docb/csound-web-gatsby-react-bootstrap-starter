@@ -1,0 +1,55 @@
+{
+  "name": "csound-web-gatsby-react-bootstrap-starter",
+  "private": true,
+  "description": "a gatsby-react-bootstrap-csound instrument",
+  "version": "0.9.0",
+  "author": "docB",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "canvas": "^2.8.0",
+    "gatsby": "^2.32.13",
+    "gatsby-image": "^2.0.41",
+    "gatsby-plugin-load-script": "^1.1.0",
+    "gatsby-plugin-manifest": "^2.0.29",
+    "gatsby-plugin-offline": "^2.0.25",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-sass": "^2.0.11",
+    "gatsby-plugin-sharp": "^2.14.4",
+    "gatsby-source-filesystem": "^2.0.33",
+    "gatsby-transformer-sharp": "^2.1.18",
+    "konva": "^8.0.1",
+    "node-sass": "^4.12.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-compound-slider": "^3.3.1",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^3.6.1",
+    "react-konva": "^17.0.2-4",
+    "react-number-format": "^4.6.3",
+    "react-numeric-input": "^2.2.3",
+    "react-select": "^4.3.1"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0",
+    "prettier": "^1.17.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "Unlicence",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop -H 0.0.0.0 -p 8000",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/docb/csound-web-gatsby-react-bootstrap-starter"
+  },
+  "homepage": "https://github.com/docb/csound-web-gatsby-react-bootstrap-starter"
+}

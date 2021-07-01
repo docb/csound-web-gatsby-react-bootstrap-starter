@@ -1,0 +1,16 @@
+.selectbtngroup { flex-wrap: wrap; color: #fcde3f; }
+.dbyellow { color: #fcde3f }
+.dbblue { color: #fcde3f }
+.dbgreen { color: #00ff00 }
+.dbred { color: #cf2243 }
+
+$mynewcolor:#3f5afc;
+
+.btn-primary {
+    @include button-variant($mynewcolor, darken($mynewcolor, 7.5%), darken($mynewcolor, 10%), lighten($mynewcolor,5%), lighten($mynewcolor, 10%), darken($mynewcolor,30%));
+}
+.patcol { margin-top: 5px; margin-right: 5px; background-color: #253040; border-radius: 3px; }
+.patcol:last-child { margin-right: 0px }
+.patlabel { text-align: center; background-color: #304050;}
+.instfooter { margin-top: 5px; background-color: #304050; border-radius: 3px; }
+.tunselect { background-color: #304050; border-radius: 3px; color: black; z-index:1000}
