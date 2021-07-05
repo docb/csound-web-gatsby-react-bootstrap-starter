@@ -94,17 +94,17 @@ class Instrument extends React.Component {
           {components}
         </Row> 
         <Row>
-          <Col>
-           <Button onClick={this.download.bind(this)}>Save</Button>
+          <Col md="auto">
+           <Button size="sm" onClick={this.download.bind(this)}>Save</Button>
           </Col>
-          <Col>
+          <Col md="auto">
            <input type="file"
             style={{ display: 'none' }}
             multiple={false}
             accept=".json,application/json"
             onChange={evt => this.upload(evt)}
             ref={e=>this.dofileUpload = e} />
-           <Button onClick={this.open.bind(this)}>Load</Button>
+           <Button size="sm" onClick={this.open.bind(this)}>Load</Button>
           </Col>
         </Row>
        </>
