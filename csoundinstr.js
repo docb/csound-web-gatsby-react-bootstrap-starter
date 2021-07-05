@@ -12,8 +12,10 @@ class CsoundInstr extends React.Component {
       let t = { value: { name:'12edo' } , label: '12edo' }; 
       this.state={csoundLoaded:"loading",csndstatus:'dbyellow',started: true, midi: false, velocity:100, octave: 5,currentTuning:t};
       this.inst = props.inst;
+      this.instrument = React.createRef();
       this.options = props.tunings.map(tuning => { return { value: tuning, label: tuning.name}});
       this.options.unshift(t);
+      this.root = React.createRef();
   }
 
   async componentDidMount() {
@@ -28,7 +30,7 @@ class CsoundInstr extends React.Component {
       this.csound.fs.writeFileSync(csd, buf);
       let result = await this.csound.compileCsd(csd);
       console.log(result);
-      this.csound.start();
+      await this.csound.start();
       this.setState({csoundLoaded:"running"});
       this.setState({csndstatus:"dbgreen"});
       this.audioContext = await this.csound.getAudioContext();
@@ -41,6 +43,8 @@ class CsoundInstr extends React.Component {
       } else {
          console.log("No WebMIDI support");
       }
+      this.root.current.focus();
+      this.instrument.current.setDefaultValues();
   }
 
   webMidiInit(midi_handle) {
@@ -104,7 +108,11 @@ class CsoundInstr extends React.Component {
 
   handleUpdate(id,val) {
     console.log(id,val);
-    this.csound && this.csound.setControlChannel(id,val);
+    if(val instanceof Object) {
+      Object.keys(val).forEach(key => this.csound && this.csound.setControlChannel(key,val[key]));
+    } else {
+      this.csound && this.csound.setControlChannel(id,val);
+    }
   }
 
   onKeyDown(event) {
@@ -138,7 +146,7 @@ class CsoundInstr extends React.Component {
   render() {
     const {options} = this;
     return (
-      <Row tabIndex={0} onKeyDown={this.onKeyDown.bind(this)} onKeyUp={this.onKeyUp.bind(this)}>
+      <Row tabIndex={0} onKeyDown={this.onKeyDown.bind(this)} onKeyUp={this.onKeyUp.bind(this)} ref={ ref => this.root.current = ref}>
         <Col>
           <Row>
              <Col className={this.state.csndstatus}>Csound {this.state.csoundLoaded}</Col>
@@ -158,7 +166,7 @@ class CsoundInstr extends React.Component {
             </Col>
          </Row> 
          <Row><Col>
-         <Instrument inst={this.inst} onChange={this.handleUpdate.bind(this)}/>
+            <Instrument inst={this.inst} onChange={this.handleUpdate.bind(this)} ref={ref => this.instrument.current = ref}/>
          </Col></Row>
          <Row noGutters='true' className='instfooter'>
             <Col>Computer keyboard settings:</Col>
@@ -167,7 +175,6 @@ class CsoundInstr extends React.Component {
             <Col style={{ margin:'auto', textAlign: 'right' }}>Octave:&nbsp;&nbsp;</Col>
             <Col><HFader onChange={this.onOctaveChange.bind(this)} min={0} max={9} defval={5} vals={[0,1,2,3,4,5,6,7,8,9]} step={1}/></Col>
          </Row>
-
       </Col>
     </Row>
     );

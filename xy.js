@@ -2,13 +2,13 @@ import React from 'react';
 import { Row, Col  } from "react-bootstrap"
 
 import { Stage, Layer, Circle } from 'react-konva';
-//import Konva from 'konva';
 
 class XY extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { x:props.def.defvalX, y: props.def.defvalY };
+    this.state = { x:props.def.defval.num1, y: props.def.defval.num2 };
     this.h = props.def.height;
+    this.props.def.changeValue = this.setValue.bind(this);
   }
 
   componentDidMount() {
@@ -32,24 +32,22 @@ class XY extends React.Component {
   fromPixY(y) {
     return ((y-2)/(this.h-2))*(this.props.def.maxY-this.props.def.minY) + this.props.def.minY;
   }
-  setY(y) {
-    this.setState( {y:y} );
-    this.circle.y(this.toPixY(y));
-    this.props.onChange(this.props.def.idy, this.round(y));
-  }
-  setX(x) {
-    this.setState( {x:x} );
+
+  setValue(val) {
+    const x = val[this.props.def.idx];
+    const y = val[this.props.def.idy];
+    console.log(val,x,y);
+    this.setState({x:x,y:y})
     this.circle.x(this.toPixX(x));
-    this.props.onChange(this.props.def.idx, this.round(x));
-  }
+    this.circle.y(this.toPixY(y));
+    this.props.onChange(this.props.def.id, { [this.props.def.idx]:this.round(x),[this.props.def.idy]:this.round(y)});
+  }  
 
   drag() {
-    //console.log(this.circle.attrs.x,this.circle.attrs.y);
     let x = this.fromPixX(this.circle.attrs.x);
     let y = this.fromPixY(this.circle.attrs.y);
     this.setState({x:x,y:y})
-    this.props.onChange(this.props.def.idy, this.round(y));
-    this.props.onChange(this.props.def.idx, this.round(x));
+    this.props.onChange(this.props.def.id, { [this.props.def.idx]:this.round(x),[this.props.def.idy]:this.round(y)});
   }
 
   dragBound(pos) {
@@ -68,6 +66,8 @@ class XY extends React.Component {
   }
 
   render() {
+    const dx = this.toPixX(this.props.def.defval[this.props.def.idx]);
+    const dy = this.toPixY(this.props.def.defval[this.props.def.idy]);
     return (
       <Col>
       <Row noGutters>
@@ -80,7 +80,7 @@ class XY extends React.Component {
       <Col style={{ backgroundColor: '#FDF6E3'}}>
       <Stage width={this.h+2} height={this.h+2}>
         <Layer>
-          <Circle dragBoundFunc={this.dragBound.bind(this)} onDragMove={this.drag.bind(this)} ref={ref => (this.circle = ref)} x={this.toPixX(this.props.def.defvalX)} y={this.toPixY(this.props.def.defvalY)} radius={5} fill='rgb(0,68,238)' draggable>
+          <Circle dragBoundFunc={this.dragBound.bind(this)} onDragMove={this.drag.bind(this)} ref={ref => (this.circle = ref)} x={dx} y={dy} radius={5} fill='rgb(0,68,238)' draggable>
           </Circle>
         </Layer>
       </Stage>
