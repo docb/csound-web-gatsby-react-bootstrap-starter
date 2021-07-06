@@ -92,7 +92,7 @@ class Panel extends React.Component {
           break;
           default: 
             if(component.func) {
-               let comp = component.func(this.onChange.bind(this));
+               let comp = component.func(component,this.onChange.bind(this));
                components.push(comp);
             }
           break;

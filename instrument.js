@@ -25,7 +25,11 @@ class Instrument extends React.Component {
   
   handleChange(id,val) {
     this.props.onChange(id,val);
-    this.values[id] = val;
+    if(val instanceof Object && this.values[id]) {
+      Object.assign(this.values[id],val);
+    } else {
+      this.values[id] = val;
+    }
   }
 
   getValues() {
