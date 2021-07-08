@@ -109,7 +109,7 @@ instr gentrig
   ogentrig 3
 endin
 chnset 0.6,"amp"
-chnset 0.0,"rev"
+chnset 0.3,"rev"
 chnset 10,"wavesteps_0"
 chnset 10,"wavesteps_1"
 chnset 10,"wavesteps_2"
@@ -122,8 +122,8 @@ chnset 0.01,"adsr1_a"
 chnset 0.01,"adsr1_d"
 chnset 1,"adsr1_s"
 chnset 0.07,"adsr1_r"
-chnset 0.1,"weight"
-chnset 2,"num1"
+chnset 0.5,"weight"
+chnset 0.5,"num1"
 chnset 0.5,"num2"
 
 instr rspline

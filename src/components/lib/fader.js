@@ -82,6 +82,7 @@ class Fader extends React.Component {
   setValue = (value) => {
     let val = this.fromVal(value);
     console.log(val,this.state.values[0],this.state.updates[0]);
+    this.props.onChange(this.props.def.id, val);
     if(val === Math.floor(this.state.values[0]*1000)/1000) return;
     let values = this.state.values.slice(0);
     values[0] = this.fromVal(value);
@@ -89,7 +90,6 @@ class Fader extends React.Component {
     let updates = this.state.updates.slice(0);
     updates[0] = this.fromVal(value);
     this.setState({ updates })
-    this.props.onChange(this.props.def.id, this.toVal(updates[0]));
   }
 
   formatVal(val) {

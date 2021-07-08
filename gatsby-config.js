@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: "/",
   siteMetadata: {
     title: `your title`,
     description: `a web-csound instrument for sound generation`,
@@ -18,19 +19,5 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-/*
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `csound-web-gatsby-react-bootstrap-starter`,
-        short_name: `csound-web`,
-        start_url: `/`,
-        background_color: `#20232a`,
-        theme_color: `#20232a`,
-        display: `minimal-ui`,
-	      icon: 'src/images/icon.png',
-      },
-    },
-*/
   ],
 }

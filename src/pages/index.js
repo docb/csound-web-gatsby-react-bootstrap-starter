@@ -9,26 +9,25 @@ const IndexPage = () => {
          components:[
                 { type: 'panel', label: 'morph', id: 'morph', widgets: [
                   { id: 'weight', type: 'fader', label: 'WGT', min: 0, max: 1, step: 0.01, defval: 0.5 , height: 200},
-                  { id: 'num1', type: 'fader', label: 'num1', min: 0, max: 3.99, step: 0.01, defval: 0 , height: 200},
-                  { id: 'num2', type: 'fader', label: 'num2', min: 0, max: 3.99, step: 0.01, defval: 0 , height: 200},
+                  { id: 'xy', idx:'num1',idy:'num2',type: 'xy', label: 'mix', minX: 0, maxX: 3.99, minY: 0, maxY: 3.99,step: 0.01, defval : { num1 :0.5 , num2 : 0.5 }, height: 200},
                   ]
                 },
                 { type: 'panel', label: 'waves', id: 'waves', widgets: [ 
                   { type: 'panel', label: 'wave 0', id: 'wave0', vertical: true, widgets: [
                      { id: 'wavesteps_0', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_0', type: 'spinner', label: 'seed', size:4,  min: 1, max: 100000, step: 1, defval: 1000, vertical: false}
+                     { id: 'waveseed_0', type: 'spinner', label: 'seed', size:4,  min: 1, max: 100000, step: 1, defval: 11, vertical: false}
                   ]},
                   { type: 'panel', label: 'wave 1', id: 'wave1', vertical: true, widgets: [
                      { id: 'wavesteps_1', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_1', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 1001, vertical: false}
+                     { id: 'waveseed_1', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 12, vertical: false}
                   ]},
                   { type: 'panel', label: 'wave 2', id: 'wave2', vertical: true, widgets: [
                      { id: 'wavesteps_2', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_2', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 1002, vertical: false}
+                     { id: 'waveseed_2', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 13, vertical: false}
                   ]},
                   { type: 'panel', label: 'wave 3', id: 'wave3', vertical: true, widgets: [
                      { id: 'wavesteps_3', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_3', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 1003, vertical: false}
+                     { id: 'waveseed_3', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 14, vertical: false}
                   ]},
                   ]
                 },
@@ -50,7 +49,7 @@ const IndexPage = () => {
       <Layout>
         <Col>
           <Row><Col><h2>Random Spline Waves</h2></Col></Row>
-          <Row><Col> <CsoundInstr csoundwasm={withPrefix('csound.dev.esm.js')} inst={inst} csd={ withPrefix('rspline.csd')} plugins={[]} tunings={tunings}/></Col></Row>
+          <Row><Col> <CsoundInstr csoundwasm={withPrefix('csound.esm.js')} inst={inst} csd={ withPrefix('rspline.csd')} plugins={[]} tunings={tunings}/></Col></Row>
         </Col>
       </Layout>
     )
