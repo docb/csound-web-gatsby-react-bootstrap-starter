@@ -17,17 +17,19 @@ class CsoundInstr extends React.Component {
   }
 
   async componentDidMount() {
-      const url = this.props.csoundwasm;
-      const { Csound } = await import(/* webpackIgnore: true */ url);
-      this.csound = await Csound({
-        withPlugins: this.props.plugins
-      });
-      const csdresp = await fetch(this.props.csd);
-      let buf = await csdresp.text();
-      let csd = this.props.csd.substring(this.props.csd.lastIndexOf('/')+1);
-      this.csound.fs.writeFileSync(csd, buf);
-      let result = await this.csound.compileCsd(csd);
-      console.log(result);
+    const url = this.props.csoundwasm;
+    const { Csound } = await import(/* webpackIgnore: true */ url);
+    this.csound = await Csound({
+      withPlugins: this.props.plugins
+    });
+    const csdresp = await fetch(this.props.csd);
+    let buf = await csdresp.text();
+    let csd = this.props.csd.substring(this.props.csd.lastIndexOf('/')+1);
+    this.csound.fs.writeFileSync(csd, buf);
+    let result = await this.csound.compileCsd(csd);
+    if(result) {
+      this.setState({csoundLoaded:"compiling csd failed"});
+    } else {
       this.csound.start();
       this.setState({csoundLoaded:"running"});
       this.setState({csndstatus:"dbgreen"});
@@ -41,6 +43,7 @@ class CsoundInstr extends React.Component {
       } else {
          console.log("No WebMIDI support");
       }
+    }
   }
 
   webMidiInit(midi_handle) {
@@ -58,28 +61,28 @@ class CsoundInstr extends React.Component {
     }
   }
   webMidiErr(err) {
-      console.log("Error starting WebMIDI");
+    console.log("Error starting WebMIDI");
   }
 
   getFreq(key) {
-     let currentTuning = this.state.currentTuning.value;
-     let note = (key + currentTuning.basekey) % 12;
-     let octave = Math.floor((key + currentTuning.basekey) / 12);
-     console.log(note,octave,currentTuning.scale[note]);
-     return currentTuning.basefreq * currentTuning.scale[note]* Math.pow(2,octave);
+    let currentTuning = this.state.currentTuning.value;
+    let note = (key + currentTuning.basekey) % 12;
+    let octave = Math.floor((key + currentTuning.basekey) / 12);
+    console.log(note,octave,currentTuning.scale[note]);
+    return currentTuning.basefreq * currentTuning.scale[note]* Math.pow(2,octave);
   }
 
   sendNoteEvent(key,vel,on) {
-     let eventStr;
+    let eventStr;
      
-     if(this.state.currentTuning.value.name==='12edo') {
-        eventStr = `i "trig" 0 0.1 ${on} ${key} ${vel}`;
-     } else {
-        eventStr = `i "freqtrig" 0 0.1 ${on} ${this.getFreq(key)} ${vel}`;
-     }
-     console.log(eventStr);
-     this.csound.readScore(eventStr);
-   }
+    if(this.state.currentTuning.value.name==='12edo') {
+       eventStr = `i "trig" 0 0.1 ${on} ${key} ${vel}`;
+    } else {
+       eventStr = `i "freqtrig" 0 0.1 ${on} ${this.getFreq(key)} ${vel}`;
+    }
+    console.log(eventStr);
+    this.csound.readScore(eventStr);
+  }
 
   onMidiEvent(event) {
       switch (event.data[0] & 0xf0) {
@@ -115,6 +118,7 @@ class CsoundInstr extends React.Component {
         this.sendNoteEvent(note-60 + this.state.octave*12,this.state.velocity,1);
      }
   }
+
   onKeyUp(event) {
      if(event.repeat) return;
      const note = noteMap[event.nativeEvent.code]
@@ -123,6 +127,7 @@ class CsoundInstr extends React.Component {
         this.sendNoteEvent(note-60 + this.state.octave*12,this.state.velocity,0);
      }
   }
+
   onVelChange(vel) {
     this.setState({ velocity: vel });
   }
@@ -130,11 +135,13 @@ class CsoundInstr extends React.Component {
   onOctaveChange(oct) {
     this.setState({ octave: oct });
   }
+
   handleSelect = (currentTuning) => {
     this.setState({ currentTuning }, () =>
       console.log(`Option selected:`, this.state.currentTuning)
     );
-  };
+  }
+
   render() {
     const {options} = this;
     return (
