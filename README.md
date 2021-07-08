@@ -101,7 +101,7 @@ Thereby the follwing rules apply:
    - In order to play the instrument with midi (chrome) or the computer keyboard, the instrument must provide two trigger instruments
        `trig` and `freqtrig` as in the static/rspline.csd shown.
 
-```csd
+```csound-orc
 opcode freqtrigger,0,iiii
   insno,ion,ifreq,ivel xin
   print insno,ion,ifreq,ivel
