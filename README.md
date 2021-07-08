@@ -18,7 +18,6 @@ This starter ships with a small csound instrument which generates sound with ran
     # create a new Gatsby site using the hello-world starter
     gatsby new my_new_csound_web_project https://github.com/docb/csound-web-gatsby-react-bootstrap-starter
     ```
-
 1.  **Start developing.**
 
     Navigate into your new site’s directory and start it up.
@@ -27,15 +26,16 @@ This starter ships with a small csound instrument which generates sound with ran
     cd my_new_csound_web_project
     gatsby develop
     ```
-    The csound webapp is now running at `http://localhost:8000`!
-    If all worked well you should see "Csound running". 
+The csound webapp is now running at `http://localhost:8000`!
+If all worked well you should see "Csound running". 
 
 ## What now?
 
-### Highlevel **
-    You can use this starter without any deeper js/react knowhow. The GUI of a csound instrument can be made by filling out a JS object
-    as shown in `src/pages/index.js`.
-    ```
+### Highlevel
+You can use this starter without any deeper js/react knowhow. The GUI of a csound instrument can be made by filling out a JS object
+as shown in `src/pages/index.js`.
+    
+```
 import React from 'react'
 import Layout from '../components/layout'
 import CsoundInstr from '../components/lib/csoundinstr'
@@ -94,15 +94,14 @@ const IndexPage = () => {
 }
 
 export default IndexPage
-                                                                                                                                                                                  19,1          Top
-    ```
-     Therby the follwing rules apply:
-     - The id attribute of the components must match the channel name in the csound instrument located in the 'static' folder
-       (exceptions: idx and idy in the xy component and <id>_a,<id>_d,<id>_s,<id>_r in the predefined component adsr )
-     - In order to play the instrument with midi (chrome) or the computer keyboard, the instrument must provide two trigger instruments
+```
+Thereby the follwing rules apply:
+   - The id attribute of the components must match the channel name in the csound instrument located in the 'static' folder
+       (exceptions: idx and idy in the xy component and &lt;id>_a,&lt;id>_d,&lt;id>_s,&lt;id>_r in the predefined component adsr )
+   - In order to play the instrument with midi (chrome) or the computer keyboard, the instrument must provide two trigger instruments
        `trig` and `freqtrig` as in the static/rspline.csd shown.
 
-     ```
+```
 opcode freqtrigger,0,iiii
   insno,ion,ifreq,ivel xin
   print insno,ion,ifreq,ivel
@@ -119,7 +118,6 @@ opcode notetrigger,0,iiii
   freqtrigger insno,ion,ifreq,ivel
 endop
 
-
 instr trig
   insno = nstrnum("rspline") 
   notetrigger insno,p4,p5,p6
@@ -133,20 +131,21 @@ instr freqtrig
   turnoff
 endin
 
-     ``` 
+``` 
+
 The freqtrig instrument is used for other tunings which can be passed to the CsoundInstr (see above).
  
 ### Deploying
 Run
-```
+```shell
 gatsby clean && gatsby build
 ```
 If all worked fine then you can test the app via `gatsby serve`.
 The static web site is located in the `public` folder and can be deployed where ever you want to.
 If the website is hosted under a subpath do the following:
 
-- in gatsby-config.js edit the entry pathPrefix to point to the target path on the web server.
+- in gatsby-config.js edit the entry `pathPrefix` to point to the target path on the web server.
 - Run
-```
+```shell
 gatsby clean && gatsby build --prefix-paths
 ```
