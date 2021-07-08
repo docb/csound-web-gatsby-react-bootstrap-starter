@@ -35,7 +35,7 @@ If all worked well you should see "Csound running".
 You can use this starter without any deeper js/react knowhow. The GUI of a csound instrument can be made by filling out a JS object
 as shown in `src/pages/index.js`.
     
-```
+```jsx
 import React from 'react'
 import Layout from '../components/layout'
 import CsoundInstr from '../components/lib/csoundinstr'
@@ -101,7 +101,7 @@ Thereby the follwing rules apply:
    - In order to play the instrument with midi (chrome) or the computer keyboard, the instrument must provide two trigger instruments
        `trig` and `freqtrig` as in the static/rspline.csd shown.
 
-```
+```csd
 opcode freqtrigger,0,iiii
   insno,ion,ifreq,ivel xin
   print insno,ion,ifreq,ivel
