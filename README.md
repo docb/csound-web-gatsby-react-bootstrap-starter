@@ -1,5 +1,5 @@
 # csound-web-gatsby-react-bootstrap-starter
-This starter can be used to quickly setup a csound-web (v 1.16.1) project developed with react-bootstrap. 
+This starter can be used to quickly setup a csound-web (v 6.16.1) project developed with react-bootstrap. 
 This starter ships with a small csound instrument which generates sound with random spline waves.
 
 ## Quick start
@@ -53,19 +53,19 @@ const IndexPage = () => {
                 { type: 'panel', label: 'waves', id: 'waves', widgets: [
                   { type: 'panel', label: 'wave 0', id: 'wave0', vertical: true, widgets: [
                      { id: 'wavesteps_0', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_0', type: 'spinner', label: 'seed', size:4,  min: 1, max: 100000, step: 1, defval: 11, vertical: false}
+                     { id: 'waveseed_0', type: 'spinner', label: 'seed', size:4,  min: 1, max: 100000, step: 1, defval: 11}
                   ]},
                   { type: 'panel', label: 'wave 1', id: 'wave1', vertical: true, widgets: [
                      { id: 'wavesteps_1', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_1', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 12, vertical: false}
+                     { id: 'waveseed_1', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 12}
                   ]},
                   { type: 'panel', label: 'wave 2', id: 'wave2', vertical: true, widgets: [
                      { id: 'wavesteps_2', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_2', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 13, vertical: false}
+                     { id: 'waveseed_2', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 13}
                   ]},
                   { type: 'panel', label: 'wave 3', id: 'wave3', vertical: true, widgets: [
                      { id: 'wavesteps_3', type: 'knob', label: 'steps', min: 4, max: 16, step: 1, defval:10 },
-                     { id: 'waveseed_3', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 14, vertical: false}
+                     { id: 'waveseed_3', type: 'spinner', label: 'seed',  size:4, min: 1, max: 100000, step: 1, defval: 14}
                   ]},
                   ]
                 },
@@ -134,6 +134,35 @@ endin
 ``` 
 
 The freqtrig instrument is used for other tunings which can be passed to the CsoundInstr (see above).
+
+### Components
+The following components are currently available:
+#### panel
+| parameter | type | description | mandatory |
+|------|------|-----------------------------|-------------|
+| id | string | the id of the panel | yes | 
+| label | string | the label displayed above the panel | no |
+| on | boolean |  if true the label will be rendered as button which triggers a one or zero on the channel &lt;id> -- can be used to turn on and off a complete unit | no | 
+| onVal | 0 or 1 | the default value for on/off  | no | 
+| widgets | list | the list of components in the panel | yes |
+| vertical | boolean | the orientaiton of the components inside the panel (default false - horizontal) | no | 
+
+#### fader, hfader, knob
+The faders and knobs support editing values and stepping via the keyboard up and down arrows.
+| parameter | type | description | mandatory |
+|------|------|-----------------------------|-------------|
+| id | string | the id of the fader corresponding to the csound channel name | yes | 
+| label | string | the label displayed above the fader | no |
+| min | number | the minimum value of the fader/knob | yes |
+| max | number | the maximum value of the fader/knob | yes |
+| step | number | the precision of the fader/knob - use 1 for integer and e.g. 0.01 for floats | yes |
+| defval | number | the default value | yes |
+| height | number | the height of the fader/knob | yes |
+| width | number | the witdh of the knob/hfader | yes |
+
+#### spinner
+a number input with up and down arrows.
+
  
 ### Deploying
 Run
@@ -142,7 +171,7 @@ gatsby clean && gatsby build
 ```
 If all worked fine then you can test the app via `gatsby serve`.
 The static web site is located in the `public` folder and can be deployed where ever you want to.
-If the website is hosted under a subpath do the following:
+If the webapp is hosted under a subpath do the following:
 
 - in gatsby-config.js edit the entry `pathPrefix` to point to the target path on the web server.
 - Run
