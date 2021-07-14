@@ -110,11 +110,19 @@ class CsoundInstr extends React.Component {
   }
 
   handleUpdate(id,val) {
-    console.log(id,val);
+    if(!this.csound) return;
+    console.log('handle update',id,val);
     if(val instanceof Object) {
-      Object.keys(val).forEach(key => this.csound && this.csound.setControlChannel(key,val[key]));
+      Object.keys(val).forEach(key => {
+        console.log('set ctrl',key,val[key]);
+        this.csound.setControlChannel(key,val[key]);
+      });
+    } else if(val instanceof String || typeof val === 'string') {
+      console.log('set string ctrl',id,val);
+      this.csound.setStringChannel(id,val);
     } else {
-      this.csound && this.csound.setControlChannel(id,val);
+      console.log('set ctrl',id,val);
+      this.csound.setControlChannel(id,val);
     }
   }
 
