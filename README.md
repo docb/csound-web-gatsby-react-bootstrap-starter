@@ -217,3 +217,13 @@ If the webapp is hosted under a subpath do the following:
 ```shell
 gatsby clean && gatsby build --prefix-paths
 ```
+### Lowlevel
+To be done. 
+The components a reusable. So for making apps e.g. without midi or with sequencers just take the `src/components/lib/csoundinstr.js`
+modify it acordingly.
+
+It is possible to plug in custom components in this system by providing a generation funtion (see `src/components/lib/panel.js`)
+Examples will be provided soonish.
+
+
+
