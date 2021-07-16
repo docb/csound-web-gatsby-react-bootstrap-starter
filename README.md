@@ -15,7 +15,7 @@ This starter ships with a small csound instrument which generates sound with ran
 1.  **Create a site.**
 
     ```shell
-    # create a new Gatsby site using the hello-world starter
+    # create a new Gatsby site using the csound-web-gatsby-react-bootstrap-starter starter
     gatsby new my_new_csound_web_project https://github.com/docb/csound-web-gatsby-react-bootstrap-starter
     ```
 1.  **Start developing.**
@@ -140,6 +140,7 @@ The following components are currently available:
 #### panel
 | parameter | type | description | mandatory |
 |------|------|-----------------------------|-------------|
+| type | string | must be 'panel' | yes | 
 | id | string | the id of the panel | yes | 
 | label | string | the label displayed above the panel | no |
 | on | boolean |  if true the label will be rendered as button which triggers a one or zero on the channel &lt;id> -- can be used to turn on and off a complete unit | no | 
@@ -151,6 +152,7 @@ The following components are currently available:
 The faders and knobs support editing values and stepping via the keyboard up and down arrows.
 | parameter | type | description | mandatory |
 |------|------|-----------------------------|-------------|
+| type | string | must be 'fader'/'hfader'/'knob' | yes | 
 | id | string | the id of the fader corresponding to the csound channel name | yes | 
 | label | string | the label displayed above the fader | no |
 | min | number | the minimum value of the fader/knob | yes |
@@ -162,8 +164,45 @@ The faders and knobs support editing values and stepping via the keyboard up and
 
 #### spinner
 a number input with up and down arrows.
-
+| parameter | type | description | mandatory |
+|------|------|-----------------------------|-------------|
+| type | string | must be 'spinner' | yes | 
+| id | string | the id of the number input corresponding to the csound channel name | yes | 
+| label | string | the label displayed above the fader | no |
+| min | number | the minimum value of the number input | yes |
+| max | number | the maximum value of the number input | yes |
+| step | number | the precision of the fader/knob - use 1 for integer and e.g. 0.01 for floats | yes |
+| defval | number | the default value | yes |
+| size | number | the number of characters | yes |
  
+#### xy
+| parameter | type | description | mandatory |
+|------|------|-----------------------------|-------------|
+| type | string | must be 'xy' | yes | 
+| idx | string | the id of the x value corresponding to the csound channel name | yes | 
+| idy | string | the id of the y value corresponding to the csound channel name | yes | 
+| label | string | the label displayed above the fader | no |
+| minX | number | the minimum value of x | yes |
+| maxX | number | the maximum value of x | yes |
+| minY | number | the minimum value of y | yes |
+| maxY | number | the maximum value of y | yes |
+| step | number | the precision of the xy values - use 1 for integer and e.g. 0.01 for floats | yes |
+| defval | object | the default value of the form {[idx]:defaultx,[idy]:defaulty }| yes |
+
+#### select
+a radio button selection
+| parameter | type | description | mandatory |
+|------|------|-----------------------------|-------------|
+| type | string | must be 'select' | yes | 
+| id | string | the id of the number input corresponding to the csound channel name | yes | 
+| label | string | the label displayed above the fader | no |
+| start | number | the index of the first button mostly eithier 0 or 1, defualt 0 | no |
+| vertical | boolean | arrangement of the toggle buttons default false | no |
+| items | string array | the items of the selection | yes|
+
+#### more to come
+combobox, string input, meter, ....
+
 ### Deploying
 Run
 ```shell
