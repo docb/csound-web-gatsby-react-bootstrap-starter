@@ -81,8 +81,8 @@ class Fader extends React.Component {
   }
   setValue = (value) => {
     let val = this.fromVal(value);
-    console.log(val,this.state.values[0],this.state.updates[0]);
-    this.props.onChange(this.props.def.id, val);
+    console.log(value,val,this.state.values[0],this.state.updates[0]);
+    this.props.onChange(this.props.def.id, value);
     if(val === Math.floor(this.state.values[0]*1000)/1000) return;
     let values = this.state.values.slice(0);
     values[0] = this.fromVal(value);
@@ -154,7 +154,7 @@ class Fader extends React.Component {
       </Slider>
       </Col>
       </Row>
-      <Row noGutters='true' className="justify-content-center"><Col md="auto"><NumberFormat onValueChange={this.onTextValueChange} value={this.formatVal(this.toVal(updates[0]))} style={{color:'white',backgroundColor:'black',textAlign:'center', margin:2, paddingTop: 0, paddingBottom:0, border:0 }} size={2} decimalScale={this.decimaelScale} fixedDecimalScale={true}/></Col></Row>
+      <Row noGutters='true' className="justify-content-center"><Col md="auto"><NumberFormat onValueChange={this.onTextValueChange} value={this.formatVal(this.toVal(updates[0]))} style={{color:'white',backgroundColor:'black',textAlign:'center', margin:2, paddingTop: 0, paddingBottom:0, border:0 }} size={this.props.def.size || 2} decimalScale={this.decimalScale} fixedDecimalScale={true}/></Col></Row>
       </Col>
     )
   }

@@ -35,6 +35,7 @@ class CsoundInstr extends React.Component {
       await this.csound.start();
       this.setState({csoundLoaded:"running"});
       this.setState({csndstatus:"dbgreen"});
+      this.props.onStart && this.props.onStart();
       this.audioContext = await this.csound.getAudioContext();
       let isStarted = this.audioContext.state === "running";
       this.setState({started:isStarted});
@@ -54,6 +55,7 @@ class CsoundInstr extends React.Component {
     let devicesAvailable = false;
     let devs = midi_handle.inputs.values();
     for ( let device = devs.next(); device && !device.done; device = devs.next()) {
+      console.log(device);
       device.value.onmidimessage = this.onMidiEvent.bind(this);
       devicesAvailable = true;
     }
@@ -88,6 +90,26 @@ class CsoundInstr extends React.Component {
     this.csound.readScore(eventStr);
   }
 
+  async getChannel(chn) {
+    if(this.csound) {
+      return await this.csound.getControlChannel(chn);
+    }
+  }
+
+  async getTable(fn) {
+    if(this.csound) {
+      let arr =  await this.csound.tableCopyOut(fn);
+      return arr;
+    }
+  }
+
+  async getTableLength(fn) {
+    if(this.csound) {
+      return await this.csound.tableLength("" + fn);
+    }
+  }
+
+
   onMidiEvent(event) {
       switch (event.data[0] & 0xf0) {
         case 0x90:
@@ -110,11 +132,18 @@ class CsoundInstr extends React.Component {
   }
 
   handleUpdate(id,val) {
-    console.log(id,val);
+    if(!this.csound) return;
+    console.log('handle update',id,val);
     if(val instanceof Object) {
-      Object.keys(val).forEach(key => this.csound && this.csound.setControlChannel(key,val[key]));
+      Object.keys(val).forEach(key => {
+        this.handleUpdate(key,val[key]);
+      });
+    } else if(val instanceof String || typeof val === 'string') {
+      console.log('set string ctrl',id,val);
+      this.csound.setStringChannel(id,val);
     } else {
-      this.csound && this.csound.setControlChannel(id,val);
+      console.log('set ctrl',id,val);
+      this.csound.setControlChannel(id,val);
     }
   }
 
