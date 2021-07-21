@@ -70,6 +70,13 @@ class CsoundInstr extends React.Component {
     console.log("Error starting WebMIDI");
   }
 
+  componentWillUnmount() {
+     if(this.csound) {
+        this.csound.stop();
+        this.csound.destroy();
+     }
+  }
+
   getFreq(key) {
     let currentTuning = this.state.currentTuning.value;
     let note = (key + currentTuning.basekey) % 12;
