@@ -30,7 +30,7 @@ class Input extends React.Component {
 
   render() {
     return (
-      <Row>
+      <Row style={{ flexWrap:'nowrap'}}>
         <Col>
           <Row>
             <Col>{this.props.def.label}</Col>

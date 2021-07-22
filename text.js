@@ -12,9 +12,7 @@ class Text extends React.Component {
 
   render() {
     return (
-      <Row>
-        <Col><div dangerouslySetInnerHTML={{ __html: this.state.text }}</Col>
-      </Row>
+      <Col dangerouslySetInnerHTML={{ __html: this.state.text }}/>
     );
   }
 }
