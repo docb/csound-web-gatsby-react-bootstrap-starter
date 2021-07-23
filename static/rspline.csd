@@ -81,24 +81,20 @@ endop
 gipdf ftgen 0,0,65536,-42,-0.9,-0.2,0.5,0.2,0.9,0.5
 instr genwave
     seed p5
-    ilen limit p6,4,16
-    ivals[] init 17
+    ilen limit p6,4,32
+    ivals[] init ilen*2+1
     ivals[0] = 0
     indx = 1
-    while indx<16 do
+    isteplen = 65536/ilen
+    while indx<ilen*2+1 do
+      ivals[indx] = isteplen
+      indx += 1
       ivals[indx] duserrnd gipdf
       indx += 1
     od
-    ivals[16] = 0
-    indx = 15
-    // ensure the last point is zero
-    while indx >= ilen do
-      ivals[indx] = 0
-      indx -= 1
-    od
-    isteplen = 65536/ilen
-    idummy ftgen giwaves[p4],0,65537,8,ivals[0],isteplen,ivals[1],isteplen,ivals[2],isteplen,ivals[3],isteplen,ivals[4],isteplen,ivals[5],isteplen,ivals[6],isteplen,ivals[7],isteplen,ivals[8],isteplen,ivals[9],isteplen,ivals[10],isteplen,ivals[11],isteplen,ivals[12],isteplen,ivals[13],isteplen,ivals[14],isteplen,ivals[15],isteplen,ivals[16]
-   turnoff
+    ivals[indx-1]=0
+    iwv ftgen giwaves[p4],0,65536,8,ivals
+    turnoff
 endin
 
 turnon "gentrig"
