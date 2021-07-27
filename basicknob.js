@@ -74,11 +74,11 @@ class BasicKnob extends React.Component {
     this.angleOffset = this.props.angleOffset * Math.PI / 180;
     this.startAngle = (1.5 * Math.PI) + this.angleOffset;
     this.endAngle = (1.5 * Math.PI) + this.angleOffset + this.angleArc;
-    this.digits = Math.max(
+    this.digits = this.props.digits || Math.max(
       String(Math.abs(this.props.min)).length,
       String(Math.abs(this.props.max)).length,
       2
-    ) + 2;
+    ) + 1;
   }
 
   componentDidMount() {
