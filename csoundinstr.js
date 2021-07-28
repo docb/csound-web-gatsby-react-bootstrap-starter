@@ -97,6 +97,7 @@ class CsoundInstr extends React.Component {
           this.webMidiErr.bind(this))
       } else {
         console.log("No WebMIDI support")
+        this.setState({ midierr:"No WebMIDI Support"})
       }
     }
     this.root.current.focus()
@@ -112,8 +113,10 @@ class CsoundInstr extends React.Component {
       this.devices.push({ value: device.value, label: device.value.name })
       devicesAvailable = true
     }
-    if (!devicesAvailable)
+    if (!devicesAvailable) {
       console.log("No midi devices available")
+      this.setState({midierr: "No devices found"})
+    }
     else {
       console.log("WebMIDI support enabled")
       this.setState({ midi: true })
@@ -123,7 +126,8 @@ class CsoundInstr extends React.Component {
   }
 
   webMidiErr(err) {
-    console.log("Error starting WebMIDI")
+    console.log(err);
+    this.setState({midierr: "Error in WebMIDI"});
   }
 
   componentWillUnmount() {
@@ -183,7 +187,7 @@ class CsoundInstr extends React.Component {
         this.sendNoteEvent(event.data[1], event.data[2], 0)
         break
       case 0xB0:
-        console.log("ctrl", event.data[1], event.data[2])
+        //console.log("ctrl", event.data[1], event.data[2])
         this.instrument.current.setCtrlValue(event.data[1], event.data[2])
         break
       default:
@@ -200,13 +204,13 @@ class CsoundInstr extends React.Component {
 
   handleUpdate(id, val) {
     if (!this.csound) return
-    console.log("handle update", id, val)
+    //console.log("handle update", id, val)
     if (val instanceof Object) {
       Object.keys(val).forEach(key => {
         this.handleUpdate(key, val[key])
       })
     } else if (val instanceof String || typeof val === "string") {
-      console.log("set string ctrl", id, val)
+      //console.log("set string ctrl", id, val)
       this.csound.setStringChannel(id, val)
     } else {
       console.log("set ctrl", id, val)
@@ -217,7 +221,6 @@ class CsoundInstr extends React.Component {
   onKeyDown(event) {
     if (event.repeat) return
     const note = noteMap[event.nativeEvent.code]
-    console.log("keydown", event.nativeEvent.code, note)
     if (note) {
       this.sendNoteEvent(note - 60 + this.state.octave * 12, this.state.velocity, 1)
     }
@@ -226,7 +229,6 @@ class CsoundInstr extends React.Component {
   onKeyUp(event) {
     if (event.repeat) return
     const note = noteMap[event.nativeEvent.code]
-    console.log("keyup", event.nativeEvent.code, note)
     if (note) {
       this.sendNoteEvent(note - 60 + this.state.octave * 12, this.state.velocity, 0)
     }
@@ -257,13 +259,11 @@ class CsoundInstr extends React.Component {
     this.terpstra.current.setMode(on?1:0);
   }
   noteOn = (note) => {
-    console.log("key",note);
     if(note) {
       this.sendNoteEvent(note-60 + this.state.octave*12,this.state.velocity,1);
     }
   }
   noteOff = (note) => {
-    console.log("keyup",note);
     if(note) {
       this.sendNoteEvent(note-60 + this.state.octave*12,this.state.velocity,0);
     }
@@ -275,7 +275,7 @@ class CsoundInstr extends React.Component {
       <Row tabIndex={0} onKeyDown={this.onKeyDown.bind(this)} onKeyUp={this.onKeyUp.bind(this)}
            ref={ref => this.root.current = ref}>
         <Col>
-          <Row>
+          <Row style={{ marginBottom:5}}>
             <Col className={this.state.csndstatus}>Csound {this.state.csoundLoaded}</Col>
             <Col>
               {!this.state.started ?
@@ -286,7 +286,7 @@ class CsoundInstr extends React.Component {
             <Col> {this.state.midi ?
               <Select onChange={this.handleMidiSelect.bind(this)} options={devices} value={this.state.currentDevice}
                       isClearable={false} isSearchable={false} className="tunselect" /> :
-              <div>midi not available</div>
+              <div>{this.state.midierr}</div>
             }
             </Col>
             <Col>
@@ -298,7 +298,7 @@ class CsoundInstr extends React.Component {
             <Instrument inst={this.inst} onChange={this.handleUpdate.bind(this)}
                         ref={ref => this.instrument.current = ref} />
           </Col></Row>
-          <Row noGutters="true" className="instfooter">
+          <Row style={{ marginBottom:5}} noGutters="true" className="instfooter" >
             <Col style={{ margin:'auto', textAlign: 'left' }} md='auto'>Computer keyboard settings:</Col>
             { this.keyConfig?
               (

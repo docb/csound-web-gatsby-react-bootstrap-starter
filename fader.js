@@ -28,13 +28,12 @@ class Fader extends React.Component {
       touchAction: "none",
     }
     if (this.props.def.step >= 1) this.decimalScale = 0
-    else if (this.props.def.setp >= 0.1) this.decimalScale = 1
-    else if (this.props.def.setp >= 0.01) this.decimalScale = 2
-    else if (this.props.def.setp >= 0.001) this.decimalScale = 3
+    else if (this.props.def.step >= 0.1) this.decimalScale = 1
+    else if (this.props.def.step >= 0.01) this.decimalScale = 2
+    else if (this.props.def.step >= 0.001) this.decimalScale = 3
     if (this.props.def.log === true) {
       this.domain = [0, 1]
       this.factor = Math.log(this.props.def.max / this.props.def.min)
-      console.log(this.factor)
       this.props.def.step = 0.001
     } else {
       this.domain = [this.props.def.min, this.props.def.max]
@@ -80,8 +79,6 @@ class Fader extends React.Component {
   }
   setValue = (value) => {
     let val = this.fromVal(value)
-    console.log(value, val, this.state.values[0], this.state.updates[0])
-    console.log(val, this.state.values[0], this.state.updates[0])
     this.props.onChange(this.props.def.id, value)
     if (val === Math.floor(this.state.values[0] * 1000) / 1000) return
     let values = this.state.values.slice(0)
@@ -164,7 +161,7 @@ class Fader extends React.Component {
           paddingTop: 0,
           paddingBottom: 0,
           border: 0,
-        }} size={this.props.def.size || 2} decimalScale={this.decimalScale} fixedDecimalScale={true} /></Col></Row>
+        }} size={this.props.def.size || 2} decimalScale={this.decimalScale} fixedDecimalScale={false} /></Col></Row>
       </Col>
     )
   }

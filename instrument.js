@@ -14,11 +14,9 @@ class Instrument extends React.Component {
 
   extractComponents(current) {
     if (current.type === "panel" || current.type === "multifader" || current.type === "tabpanel") {
-      this.components[current.id]= current;
       current.widgets.forEach(item => this.extractComponents(item))
-    } else {
-      this.components[current.id] = current
     }
+    this.components[current.id] = current
   }
 
   componentDidMount() {
@@ -58,7 +56,10 @@ class Instrument extends React.Component {
   }
 
   setDefaultValues() {
-    Object.keys(this.components).forEach(key => this.components[key].changeValue(this.components[key].defval))
+    Object.keys(this.components).forEach(key => {
+      if(this.components[key].changeValue && this.components[key].defval)
+        this.components[key].changeValue(this.components[key].defval)
+    })
   }
 
   async download() {

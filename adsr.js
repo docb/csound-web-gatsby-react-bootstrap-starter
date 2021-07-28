@@ -77,7 +77,6 @@ class Adsr extends React.Component {
     arr.push({ x: this.state[this.ida] + this.state[this.idd], y: this.state[this.ids] })
     arr.push({ x: this.state[this.ida] + this.state[this.idd] + sdur, y: this.state[this.ids] })
     arr.push({ x: this.state[this.ida] + this.state[this.idd] + sdur + this.state[this.idr], y: 0 })
-    console.log(arr)
     this.setState({ data: arr })
   }
 
@@ -88,7 +87,6 @@ class Adsr extends React.Component {
   }
 
   onChange(id, val) {
-    console.log("adsr on change", id, val)
     this.props.onChange(id, val)
     let obj = {}
     obj[id] = val
@@ -107,10 +105,13 @@ class Adsr extends React.Component {
       <Col xs="auto" className="patcol">
         <Row noGutters>
           <Col className="patlabel">
-          <Button style={st} size="sm" variant={this.state.on ? "primary" : "secondary"}
-                  onClick={this.handleClick.bind(this)}>
-            {this.props.def.id}
-          </Button>
+            {!this.props.def.on?this.props.def.label:(
+              <Button style={st} size="sm" variant={this.state.on ? "primary" : "secondary"}
+              onClick={this.handleClick.bind(this)}>
+                 {this.props.def.label}
+              </Button>
+              )
+            }
           </Col>
         </Row>
         <Row noGutters style={{ flexWrap: "nowrap" }}>

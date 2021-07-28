@@ -14,7 +14,7 @@ export default class Components {
   static lfo(id, label, amp) {
     const size = 35
     return {
-      type: "panel", label: label, id: id + "_on", on: true, widgets: [
+      type: "panel", label: label, id: id + "_on", on: true, defval:false, widgets: [
         {
           type: "panel", id: id + "ctrlpanel", vertical: true, widgets: [
             {
