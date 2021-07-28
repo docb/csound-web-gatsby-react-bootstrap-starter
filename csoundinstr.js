@@ -55,7 +55,7 @@ class CsoundInstr extends React.Component {
       midi: false,
       velocity: 100,
       octave: 5,
-      currentTuning: t,
+      currentTuning: t
     }
     this.inst = props.inst
     this.instrument = React.createRef()
@@ -67,6 +67,11 @@ class CsoundInstr extends React.Component {
     if(this.props.keyboard) {
       this.keyConfig = { size: 30 };
       this.terpstra = React.createRef();
+    }
+    this.midichannels = [{ label:"All Channels", value:0 }];
+    this.state.midichannel = this.midichannels[0];
+    for(let k = 1; k<=16;k++) {
+      this.midichannels.push({ label: 'Chn '+ k, value: k});
     }
   }
 
@@ -175,8 +180,10 @@ class CsoundInstr extends React.Component {
     }
   }
 
-
   onMidiEvent(event) {
+    const chn = (event.data[0]&0x0f) + 1;
+    const chfilter = this.state.midichannel.value;
+    if(chfilter && chn !== chfilter) return;
     switch (event.data[0] & 0xf0) {
       case 0x90:
         if (event.data[2] !== 0) {
@@ -269,8 +276,12 @@ class CsoundInstr extends React.Component {
     }
   }
 
+  onChannelChange(chn) {
+    this.setState({midichannel:chn});
+  }
+
   render() {
-    const { options, devices } = this
+    const { options, devices,midichannels } = this
     return (
       <Row tabIndex={0} onKeyDown={this.onKeyDown.bind(this)} onKeyUp={this.onKeyUp.bind(this)}
            ref={ref => this.root.current = ref}>
@@ -283,12 +294,19 @@ class CsoundInstr extends React.Component {
                 <div>audio enabled</div>
               }
             </Col>
-            <Col> {this.state.midi ?
-              <Select onChange={this.handleMidiSelect.bind(this)} options={devices} value={this.state.currentDevice}
-                      isClearable={false} isSearchable={false} className="tunselect" /> :
-              <div>{this.state.midierr}</div>
+            { this.state.midi ? (
+              <>
+              <Col>
+                <Select onChange={this.handleMidiSelect.bind(this)} options={devices} value={this.state.currentDevice}
+                      isClearable={false} isSearchable={false} className="tunselect" />
+              </Col>
+              <Col>
+                <Select onChange={this.onChannelChange.bind(this)} options={midichannels} value={this.state.midichannel}
+                        isClearable={false} isSearchable={false} className="tunselect" />
+              </Col>
+              </>
+              ) : <Col>{this.state.midierr}</Col>
             }
-            </Col>
             <Col>
               <Select onChange={this.handleSelect} options={options} value={this.state.currentTuning}
                       isClearable={false} isSearchable={false} className="tunselect" />
