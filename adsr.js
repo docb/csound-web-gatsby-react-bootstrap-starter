@@ -82,12 +82,17 @@ class Adsr extends React.Component {
 
   setValue(val) {
     Object.keys(val).forEach(key => {
-      this.components[key].changeValue(val[key])
+      if(key === this.props.def.id) {
+        this.props.onChange(this.props.def.id, { [this.props.def.id]: val[key]})
+        this.setState({ on: !!val[key]})
+      } else {
+        this.components[key].changeValue(val[key])
+      }
     })
   }
 
   onChange(id, val) {
-    this.props.onChange(id, val)
+    this.props.onChange(this.props.def.id, {[id]:val})
     let obj = {}
     obj[id] = val
     this.setState(obj)
@@ -95,7 +100,7 @@ class Adsr extends React.Component {
   }
 
   handleClick() {
-    this.props.onChange(this.props.def.id, (!this.state.on) ? 1 : 0)
+    this.props.onChange(this.props.def.id, { [this.props.def.id]: (!this.state.on) ? 1 : 0})
     this.setState({ on: !this.state.on })
   }
 
