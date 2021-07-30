@@ -4,7 +4,7 @@ import Instrument from "./instrument.js"
 import HFader from "./hfader"
 import Select from "react-select"
 import Tepstra from './tepstra'
-import NToggle from './toggle'
+import Toggle from './toggle'
 
 const noteMap = {
   KeyZ: 60,
@@ -262,9 +262,10 @@ class CsoundInstr extends React.Component {
     device.value.onmidimessage = this.onMidiEvent.bind(this)
   }
 
-  onModeChange(on) {
+  onModeChange(id,on) {
     this.terpstra.current.setMode(on?1:0);
   }
+
   noteOn = (note) => {
     if(note) {
       this.sendNoteEvent(note-60 + this.state.octave*12,this.state.velocity,1);
@@ -324,7 +325,7 @@ class CsoundInstr extends React.Component {
               <Col style={{ margin: 'auto', textAlign: 'right' }}>Mode:&nbsp;&nbsp;</Col>
               <Col style={{ margin:'auto', textAlign: 'left' }}>
                 <Row>
-                  <NToggle onChange={this.onModeChange.bind(this)} def={{ label: 'hold' }} />
+                  <Toggle onChange={this.onModeChange.bind(this)} def={{ id:'hold',label: 'hold' }} />
                 </Row>
               </Col>
               </>

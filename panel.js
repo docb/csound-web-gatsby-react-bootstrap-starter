@@ -83,7 +83,7 @@ class Panel extends React.Component {
             break
           case "toggle":
             components.push(
-              <Toggle def={component} key={component.id} />,
+              <Toggle def={component} key={component.id} onChange={this.onChange.bind(this)} />,
             )
             break
           case "select":
