@@ -77,7 +77,7 @@ class Panel extends React.Component {
             break
           case "knob":
             components.push(
-              <Knob vertical={this.props.def.vertical} def={component} key={component.id}
+              <Knob def={component} key={component.id}
                     onChange={this.onChange.bind(this)} />,
             )
             break
@@ -94,7 +94,7 @@ class Panel extends React.Component {
             break
           case "spinner":
             components.push(
-              <NumberInput vertical={this.props.def.vertical} def={component} key={component.id}
+              <NumberInput def={component} key={component.id}
                            onChange={this.onChange.bind(this)} />,
             )
             break
