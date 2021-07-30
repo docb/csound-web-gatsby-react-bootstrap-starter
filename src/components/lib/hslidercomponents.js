@@ -1,29 +1,29 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment } from "react"
+import PropTypes from "prop-types"
 
 // *******************************************************
 // RAIL
 // *******************************************************
 const railOuterStyle = {
-  position: 'absolute',
-  width: '100%',
+  position: "absolute",
+  width: "100%",
   height: 42,
   top: 8,
-  transform: 'translate(0%, -50%)',
+  transform: "translate(0%, -50%)",
   borderRadius: 7,
-  cursor: 'pointer',
+  cursor: "pointer",
   // border: '1px solid white',
 }
 
 const railInnerStyle = {
-  position: 'absolute',
-  width: '100%',
+  position: "absolute",
+  width: "100%",
   height: 14,
   top: 8,
-  transform: 'translate(0%, -50%)',
+  transform: "translate(0%, -50%)",
   borderRadius: 7,
-  pointerEvents: 'none',
-  backgroundColor: 'rgb(155,155,155)',
+  pointerEvents: "none",
+  backgroundColor: "rgb(155,155,155)",
 }
 
 export function SliderRail({ getRailProps }) {
@@ -43,25 +43,25 @@ SliderRail.propTypes = {
 // HANDLE COMPONENT
 // *******************************************************
 export function Handle({
-  domain: [min, max],
-  handle: { id, value, percent },
-  disabled,
-  getHandleProps,
-}) {
+                         domain: [min, max],
+                         handle: { id, value, percent },
+                         disabled,
+                         getHandleProps,
+                       }) {
   return (
     <Fragment>
       <div
         style={{
           left: `${percent}%`,
-          position: 'absolute',
-          transform: 'translate(-50%, -50%)',
-          WebkitTapHighlightColor: 'rgba(0,0,0,0)',
+          position: "absolute",
+          transform: "translate(-50%, -50%)",
+          WebkitTapHighlightColor: "rgba(0,0,0,0)",
           zIndex: 5,
           width: 28,
           height: 42,
-          cursor: 'pointer',
+          cursor: "pointer",
           // border: '1px solid white',
-          backgroundColor: 'none',
+          backgroundColor: "none",
         }}
         {...getHandleProps(id)}
       />
@@ -70,18 +70,18 @@ export function Handle({
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
-        aria-label='slider'
+        aria-label="slider"
         style={{
           left: `${percent}%`,
-          position: 'absolute',
-          transform: 'translate(-50%, -50%)',
+          position: "absolute",
+          transform: "translate(-50%, -50%)",
           zIndex: 2,
           width: 10,
           height: 24,
           top: 8,
-          borderRadius: '10%',
-          boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
-          backgroundColor: disabled ? '#666' : '#0044FF',
+          borderRadius: "10%",
+          boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.3)",
+          backgroundColor: disabled ? "#666" : "#0044FF",
         }}
       />
     </Fragment>
@@ -108,11 +108,11 @@ Handle.defaultProps = {
 // Uses a button to allow keyboard events
 // *******************************************************
 export function KeyboardHandle({
-  domain: [min, max],
-  handle: { id, value, percent },
-  disabled,
-  getHandleProps,
-}) {
+                                 domain: [min, max],
+                                 handle: { id, value, percent },
+                                 disabled,
+                                 getHandleProps,
+                               }) {
   return (
     <button
       role="slider"
@@ -121,15 +121,15 @@ export function KeyboardHandle({
       aria-valuenow={value}
       style={{
         left: `${percent}%`,
-        position: 'absolute',
-        transform: 'translate(-50%, -50%)',
+        position: "absolute",
+        transform: "translate(-50%, -50%)",
         zIndex: 2,
         width: 10,
         height: 24,
-        top:8,
-        borderRadius: '10%',
-        boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
-        backgroundColor: disabled ? '#666' : '#0044EE',
+        top: 8,
+        borderRadius: "10%",
+        boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.3)",
+        backgroundColor: disabled ? "#666" : "#0044EE",
       }}
       {...getHandleProps(id)}
     />
@@ -158,13 +158,13 @@ export function Track({ source, target, getTrackProps, disabled }) {
   return (
     <div
       style={{
-        position: 'absolute',
-        transform: 'translate(0%, -50%)',
+        position: "absolute",
+        transform: "translate(0%, -50%)",
         height: 14,
         zIndex: 1,
-        backgroundColor: disabled ? '#999' : '#b28900',
+        backgroundColor: disabled ? "#999" : "#b28900",
         borderRadius: 7,
-        cursor: 'pointer',
+        cursor: "pointer",
         left: `${source.percent}%`,
         width: `${target.percent - source.percent}%`,
       }}
@@ -200,20 +200,20 @@ export function Tick({ tick, count, format }) {
     <div>
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           marginTop: 14,
           width: 1,
           height: 5,
-          backgroundColor: 'rgb(200,200,200)',
+          backgroundColor: "rgb(200,200,200)",
           left: `${tick.percent}%`,
         }}
       />
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           marginTop: 22,
           fontSize: 10,
-          textAlign: 'center',
+          textAlign: "center",
           marginLeft: `${-(100 / count) / 2}%`,
           width: `${100 / count}%`,
           left: `${tick.percent}%`,
