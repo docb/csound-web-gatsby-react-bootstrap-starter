@@ -3,8 +3,6 @@ import {Button, Row, Col} from "react-bootstrap"
 import Instrument from "./instrument.js"
 import HFader from "./hfader"
 import Select from "react-select"
-import Terpstra from './terpstra'
-import Toggle from './toggle'
 import OSC from 'osc-js'
 import {withPrefix} from "gatsby";
 
@@ -309,10 +307,6 @@ class CsoundInstr extends React.Component {
     this.state.currentDevice.value.onmidimessage = undefined
     this.setState({currentDevice: device})
     device.value.onmidimessage = this.onMidiEvent.bind(this)
-  }
-
-  onModeChange(id, on) {
-    this.terpstra.current.setMode(on ? 1 : 0);
   }
 
   noteOn = (note) => {
