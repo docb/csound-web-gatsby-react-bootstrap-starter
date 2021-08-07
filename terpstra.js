@@ -3,7 +3,8 @@ import {Row, Col, Button} from 'react-bootstrap'
 import {Stage, Layer, Shape} from "react-konva"
 import Alert from './alert'
 import Toggle from './toggle';
-import HFader from './hfader'
+import HFader from './hfader';
+import NumericInput from "react-numeric-input"
 
 const Terpstra = (props) => {
   const size = 30
@@ -35,7 +36,7 @@ const Terpstra = (props) => {
   }
 
   const [onoff, setOnOff] = useState({});
-  const [baseFreq, setBaseFreq] = useState(27.5)
+  const [baseFreq, setBaseFreq] = useState(32.703)
   const [velocity, setVelocity] = useState(80)
   const [mode, setMode] = useState(false)
   const [scale, setScale] = useState(scl);
@@ -424,7 +425,7 @@ const Terpstra = (props) => {
   const onVelChange = (vel) => {
     setVelocity(vel);
   }
-
+  const onBaseFreqChange = (freq) => setBaseFreq(freq);
   return (
     <>
       <Row style={{backgroundColor: '#253040'}}>
@@ -436,6 +437,14 @@ const Terpstra = (props) => {
             <Col xs={"auto"}>
               <HFader onChange={onVelChange} defval={100} min={0} max={127}
                       vals={[0, 20, 40, 60, 80, 100, 120]} step={1}/>
+            </Col>
+            <Col style={{margin: 'auto', textAlign: 'right'}} xs={"auto"}>Base frequency:</Col>
+            <Col style={{margin: 'auto'}} xs="auto">
+              <NumericInput strict={true} size={5} style={{ input: { textAlign: "center" } }}
+                            value={baseFreq}
+                            min={1} max={256} step={0.001}
+                            onChange={onBaseFreqChange}/>
+
             </Col>
             <Col style={{margin: 'auto'}} xs="auto">
               <input type="file"
