@@ -1,5 +1,6 @@
 import React from "react"
 import { Row, Col, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
+import Label from "./label";
 
 class Switch extends React.Component {
   constructor(props) {
@@ -31,9 +32,7 @@ class Switch extends React.Component {
     let ret = (
       <Col className="colselect">
         <Row noGutters="true" className="justify-content-center">
-          <Col className="dbyellow" xs="auto">
-            {this.props.def.label}
-          </Col>
+          <Label tooltip={this.props.def.tooltip} label={this.props.def.label}/>
         </Row>
         <Row noGutters="true" className="justify-content-center">
           <Col xs="auto">

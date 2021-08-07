@@ -8,6 +8,7 @@ import NumberInput from "./numberinput"
 import Toggle from "./toggle"
 import Adsr from "./adsr"
 import XY from "./xy"
+import { v4 as uuidv4 } from 'uuid';
 
 class Panel extends React.Component {
 
@@ -121,8 +122,8 @@ class Panel extends React.Component {
     if (this.props.def.vertical) {
       rcomp = (
         <Col className={"test"}>
-          {components.map(c => (
-              <Row noGutters>{c}</Row>
+          {components.map((c,i) => (
+              <Row noGutters key={"v"+i}>{c}</Row>
           )
           )}
         </Col>

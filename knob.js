@@ -1,6 +1,7 @@
 import React from "react"
 import BasicKnob from "./basicknob"
 import { Row, Col } from "react-bootstrap"
+import Label from './label'
 
 class Knob extends React.Component {
   constructor(props) {
@@ -26,11 +27,14 @@ class Knob extends React.Component {
   }
 
   render() {
+    const tooltip = (this.props.def.tooltip?this.props.def.tooltip:'')
+      + (this.props.def.midictrl?' ctrl:'+this.props.def.midictrl:'')
+      + (this.props.def.osc? ' osc:/'+this.props.def.osc+'/'+this.props.def.id:'')
 
     let ret = (
       <Col className="colknob">
         <Row noGutters="true" className="justify-content-center">
-          <Col className="dbyellow" xs="auto">{this.props.def.label}</Col>
+          <Label tooltip={this.props.def.tooltip} label={this.props.def.label}/>
         </Row>
         <Row noGutters="true" className="justify-content-center">
           <Col xs="auto">

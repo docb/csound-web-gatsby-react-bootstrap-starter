@@ -1,5 +1,6 @@
 import React from "react"
 import { Row, Col, Button } from "react-bootstrap"
+import Label from "./label";
 
 class Input extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class Input extends React.Component {
       <Row style={{ flexWrap: "nowrap" }}>
         <Col>
           <Row>
-            <Col>{this.props.def.label}</Col>
+            <Label tooltip={this.props.def.tooltip} label={this.props.def.label}/>
           </Row>
           <Row>
             <Col><Button style={st} size="sm" onClick={this.applyChange}>apply</Button></Col>
