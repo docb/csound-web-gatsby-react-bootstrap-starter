@@ -10,18 +10,25 @@ class Instrument extends React.Component {
     this.data = props.inst
     this.components = {}
     this.values = {}
+    this.data.components.forEach(component => this.extractComponents(component))
+    console.log(this.components)
   }
-
+  computeTooltip(elem) {
+    return (elem.tooltip?elem.tooltip:'')
+      + (elem.midictrl?' ctrl:'+elem.midictrl:'')
+      + (elem.osc? ' osc:/'+elem.osc+'/'+elem.id:'')
+  }
   extractComponents(current) {
     if (current.type === "panel" || current.type === "multifader" || current.type === "tabpanel") {
       current.widgets.forEach(item => this.extractComponents(item))
+    } else {
+      current.osc = this.props.osc;
+      current.tooltip=this.computeTooltip(current);
     }
     this.components[current.id] = current
   }
 
   componentDidMount() {
-    this.data.components.forEach(component => this.extractComponents(component))
-    console.log(this.components)
   }
 
   handleChange(id, val) {
@@ -48,9 +55,7 @@ class Instrument extends React.Component {
   }
 
   setValues(values) {
-    console.log("set values", values)
     Object.keys(values).forEach(key => {
-      console.log(key, this.components[key])
       this.components[key] && this.components[key].changeValue(values[key])
     })
   }

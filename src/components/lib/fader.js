@@ -1,7 +1,8 @@
 import React from "react"
 import { Slider, Rail, Handles, Tracks } from "react-compound-slider"
 import { KeyboardHandle, SliderRail, Track } from "./slidercomponents.js"
-import { Row, Col } from "react-bootstrap"
+import Label from './label'
+import { Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap"
 import NumberFormat from "react-number-format"
 
 function preventDefault(e) {
@@ -57,8 +58,7 @@ class Fader extends React.Component {
 
   toVal(value) {
     if (this.props.def.log === true) {
-      let ret = this.props.def.min * Math.exp(this.factor * value)
-      return ret
+      return this.props.def.min * Math.exp(this.factor * value)
     }
     return value
   }
@@ -101,10 +101,14 @@ class Fader extends React.Component {
     const {
       state: { values, updates },
     } = this
+    const tooltip = (this.props.def.tooltip?this.props.def.tooltip:'')
+      + (this.props.def.midictrl?' ctrl:'+this.props.def.midictrl:'')
+      + (this.props.def.osc?' osc:/'+this.props.def.osc+'/'+this.props.def.id:'')
     return (
       <Col className="colfader">
-        <Row noGutters="true" className="justify-content-center"><Col className="dbyellow"
-                                                                      md="auto">{this.props.def.label}</Col></Row>
+        <Row noGutters="true" className="justify-content-center">
+          <Label tooltip={this.props.def.tooltip} label={this.props.def.label}/>
+        </Row>
         <Row noGutters="true" className="justify-content-center"><Col md="auto">
           <Slider
             rootStyle={this.sliderStyle}
