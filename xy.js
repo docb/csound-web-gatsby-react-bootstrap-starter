@@ -1,6 +1,6 @@
 import React from "react"
 import { Row, Col } from "react-bootstrap"
-
+import Label from "./label"
 import { Stage, Layer, Circle } from "react-konva"
 
 class XY extends React.Component {
@@ -77,11 +77,11 @@ class XY extends React.Component {
     const dy = this.toPixY(this.props.def.defval[this.props.def.idy])
     return (
       <Col>
-        <Row noGutters>
-          <Col>{this.props.def.labelX}</Col>
+        <Row>
+          <Label tooltip={'ctrl:100 osc:/'+this.props.def.osc+'/'+this.props.def.id+'/'+'x'} label="x:"/>
           <Col>{this.round(this.state.x)}</Col>
-          <Col>{this.props.def.labelY}</Col>
-          <Col>{this.round(this.state.y)}</Col>
+          <Label tooltip={'ctrl 101 osc:/'+this.props.def.osc+'/'+this.props.def.id+'/'+'y'} label="y:"/>
+          <Col>{this.round(-this.state.y)}</Col>
         </Row>
         <Row noGutters>
           <Col style={{ backgroundColor: "#FDF6E3" }}>
