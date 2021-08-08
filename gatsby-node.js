@@ -12,6 +12,13 @@ exports.onCreateWebpackConfig = ({
   plugins,
   actions,
 }) => {
+
+  actions.setWebpackConfig({
+    node: {
+      dgram: 'empty'
+    }
+  })
+
   if (stage === "build-html") {
     actions.setWebpackConfig({
       module: {

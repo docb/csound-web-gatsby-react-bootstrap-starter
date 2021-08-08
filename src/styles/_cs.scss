@@ -14,3 +14,6 @@ $mynewcolor:#3f5afc;
 .patlabel { text-align: center; background-color: #304050;}
 .instfooter { margin-top: 5px; background-color: #304050; border-radius: 3px; }
 .tunselect { background-color: #304050; border-radius: 3px; color: black; z-index:1000}
+.tooltip > .tooltip-inner { background-color: rgba(50,50,50,127);text-overflow: ellipsis;}
+.tooltip > .tooltip-arrow { background-color: #333;}
+.alert > .modal-content { background-color: rgba(50,50,50,127);}
